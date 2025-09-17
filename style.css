@@ -1,4 +1,25 @@
 /*All Styles*/
 #gameContainer {
-    display: none;
+	display: none;
+}
+
+.vanishing {
+	animation: vanishAnimation 0.5s forwards;
+}
+
+@keyframes vanishAnimation {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+}
+
+#gameOverScreen {
+	display: none;
+	text-align: center;
+	margin-top: 50px;
 }

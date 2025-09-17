@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Home</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+	<body>
+		<div id="startPage">
+			<h1>The Equation Invasion</h1>
+			<p>Defend your castle from Math!</p>
+			<button id="startButton">Start!</button>
+		</div>
 
-<body>
-    <div id="startPage">
-        <h1>The Equation Invasion</h1>
-        <p>Defend your castle from Math!</p>
-        <button id="startButton">Start!</button>
-    </div>
+		<div id="gameContainer">
+			<h1>The Equation Invasion</h1>
 
-    <div id="gameContainer">
-        <h1>The Equation Invasion</h1>
+			<div id="gameArea"></div>
 
-        <div id="gameArea">
-        
-        </div>
+			<input type="text" id="answerInput" placeholder="Answer:" />
+			<button id="submitButton">Solve!</button>
 
-        <input type="text" id="answerInput" placeholder="Answer:">
-        <button id="submitButton">Solve!</button>
+			<div id="castle">
+				<img src="castle.png" alt="Castle the Hero stands upon" />
+			</div>
 
-        <div id="castle">
-            <img src="castle.png" alt="Castle the Hero stands upon">
-        </div>
+			<div id="hero">
+				<img src="hero.png" alt="Hero who defends the Castle" />
+			</div>
+		</div>
 
-        <div id="hero">
-            <img src="hero.png" alt="Hero who defends the Castle">
-        </div>
+		<script src="script.js"></script>
 
-        <div id="enemyContainer">
-            <div id="problemTxt"></div>
-            
-            <img src="smallEnemy" alt="Smaller/Easier Problem">
-            <img src="bigEnemy" alt="Bigger/Harder Problem">
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
-</body>
-
+		<div id="gameOverScreen">
+			<h1>Game Over!</h1>
+			<p>The equations reached infinity!</p>
+			<button id="restartButton">Restart</button>
+		</div>
+	</body>
 </html>
