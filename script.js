@@ -6,18 +6,21 @@ const gameArea = document.getElementById("gameArea")
 const problemText = document.getElementById("problemTxt")
 const answerInput = document.getElementById("answerInput")
 const submitButton = document.getElementById("submitButton")
+
+const newWaveScreen = document.getElementById("newWaveScreen")
 const gameOverScreen = document.getElementById("gameOverScreen")
 const restartButton = document.getElementById("restartButton")
 
 let enemiesDefeated = 0
 let enemyArray = []
 let totalEnemies = enemyArray.length + 1
-let spawnInterval
+
+let spawnInterval = 0
 let currentWave = 1
 let enemiesSpawnedThisWave = 0
 let enemiesPerWave = 8
 let spawnRate = 3000
-let movementInterval
+let movementInterval = 0
 
 startButton.addEventListener("click", () => {
 	//Hide Start Screen
@@ -25,6 +28,11 @@ startButton.addEventListener("click", () => {
 
 	//Display Game
 	gameContainer.style.display = "block"
+
+	//Display Round 1
+	newWaveScreen.style.display = 'block'
+	newWaveScreen.querySelector('p').textContent = `${currentWave}`
+	setTimeout(() => {newWaveScreen.style.display = 'none'}, 3000)
 
 	//Spawn New Enemy
 	spawnEnemy()
@@ -49,7 +57,7 @@ submitButton.addEventListener("click", () => {
 		if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
 			userAnswer = numerator / denominator
 		} else {
-			alert("Invalid fraction format. Please try again.")
+			alert("Invalid fraction. Please try again.")
 			return
 		}
 	} else {
@@ -63,7 +71,7 @@ submitButton.addEventListener("click", () => {
 		return
 	}
 
-	//Compare the user's answer to the correct numerical answer
+	//Compare user's answer to the correct numerical answer
 	const tolerance = 0.001 //For float comparison
 	if (Math.abs(userAnswer - enemyArray[0].answer) < tolerance) {
 		alert("Correct! You solved the problem.")
@@ -94,7 +102,8 @@ submitButton.addEventListener("click", () => {
 })
 
 restartButton.addEventListener("click", () => {
-	window.location.reload()
+	gameOverScreen.style.display = 'none'
+	startButton.click()
 })
 
 function gameLoop() {
@@ -181,19 +190,17 @@ function startNewWave() {
 		spawnRate = 500
 	}
 
-	problemText.textContent = `Wave ${currentWave} is starting!`
+	newWaveScreen.style.display = 'block'
+	newWaveScreen.querySelector('p').textContent = `${currentWave}`
 
 	clearInterval(spawnInterval)
 
 	setTimeout(() => {
+		newWaveScreen.style.display = 'none'
 		spawnInterval = setInterval(spawnEnemy, spawnRate)
 		problemText.textContent = ""
 		submitButtonState()
-	}, 2000)
-}
-
-function enemyMovement() {
-	//Enemy movement speed and location
+	}, 3000)
 }
 
 function enemyKilled() {

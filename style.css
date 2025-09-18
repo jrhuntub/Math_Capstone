@@ -3,6 +3,17 @@
 	display: none;
 }
 
+#newWaveScreen {
+	display: none;
+	text-align: center;
+}
+
+#gameOverScreen {
+	display: none;
+	text-align: center;
+	margin-top: 50px;
+}
+
 .vanishing {
 	animation: vanishAnimation 0.5s forwards;
 }
@@ -16,10 +27,4 @@
 		opacity: 0;
 		transform: scale(0.5);
 	}
-}
-
-#gameOverScreen {
-	display: none;
-	text-align: center;
-	margin-top: 50px;
 }
