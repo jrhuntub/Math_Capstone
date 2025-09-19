@@ -1,11 +1,27 @@
 /*All Styles*/
+body {
+	display: flex;
+	margin-top: 20px;
+	align-items: center;
+	justify-content: center;
+	background-color: lightblue
+}
+
 #gameContainer {
 	display: none;
+	text-align: center;
+	background-color: lightblue
 }
 
 #newWaveScreen {
 	display: none;
 	text-align: center;
+}
+
+#gameArea {
+	position: relative;
+	width: 100vw;
+	height: 600px;
 }
 
 #gameOverScreen {
@@ -14,8 +30,19 @@
 	margin-top: 50px;
 }
 
+.enemy {
+	position: absolute;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.problem-text {
+	color: black;
+	background-color: lightgrey;
+}
+
 .vanishing {
-	animation: vanishAnimation 0.5s forwards;
+	animation: vanishAnimation 0.3s;
 }
 
 @keyframes vanishAnimation {

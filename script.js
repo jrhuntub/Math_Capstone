@@ -4,6 +4,7 @@ const startButton = document.getElementById("startButton")
 const gameArea = document.getElementById("gameArea")
 
 const problemText = document.getElementById("problemTxt")
+const answerOutput = document.getElementById("answerOutput")
 const answerInput = document.getElementById("answerInput")
 const submitButton = document.getElementById("submitButton")
 
@@ -19,7 +20,7 @@ let spawnInterval = 0
 let currentWave = 1
 let enemiesSpawnedThisWave = 0
 let enemiesPerWave = 8
-let spawnRate = 3000
+let spawnRate = 4200
 let movementInterval = 0
 
 startButton.addEventListener("click", () => {
@@ -30,9 +31,11 @@ startButton.addEventListener("click", () => {
 	gameContainer.style.display = "block"
 
 	//Display Round 1
-	newWaveScreen.style.display = 'block'
-	newWaveScreen.querySelector('p').textContent = `${currentWave}`
-	setTimeout(() => {newWaveScreen.style.display = 'none'}, 3000)
+	newWaveScreen.style.display = "block"
+	newWaveScreen.querySelector("p").textContent = `${currentWave}`
+	setTimeout(() => {
+		newWaveScreen.style.display = "none"
+	}, 3000)
 
 	//Spawn New Enemy
 	spawnEnemy()
@@ -57,7 +60,7 @@ submitButton.addEventListener("click", () => {
 		if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
 			userAnswer = numerator / denominator
 		} else {
-			alert("Invalid fraction. Please try again.")
+			answerOutput.textContent = "Invalid fraction. Please try again."
 			return
 		}
 	} else {
@@ -67,14 +70,14 @@ submitButton.addEventListener("click", () => {
 
 	//Check if the final converted answer is valid
 	if (isNaN(userAnswer)) {
-		alert("Please enter a valid number or fraction!")
+		answerOutput.textContent = "Please enter a valid number or fraction!"
 		return
 	}
 
 	//Compare user's answer to the correct numerical answer
 	const tolerance = 0.001 //For float comparison
 	if (Math.abs(userAnswer - enemyArray[0].answer) < tolerance) {
-		alert("Correct! You solved the problem.")
+		answerOutput.textContent = "Correct! You solved the problem"
 
 		enemyKilled()
 		enemyArray.shift()
@@ -97,13 +100,12 @@ submitButton.addEventListener("click", () => {
 		enemiesDefeated++
 		submitButtonState()
 	} else {
-		alert("Incorrect! Hurry!")
+		answerOutput.textContent = "Incorrect! Hurry!"
 	}
 })
 
 restartButton.addEventListener("click", () => {
-	gameOverScreen.style.display = 'none'
-	startButton.click()
+	window.location.reload()
 })
 
 function gameLoop() {
@@ -116,11 +118,10 @@ function gameLoop() {
 		const enemyDiv = allEnemyDivs[i]
 
 		//Update the enemy's position in the data
-		enemyData.x += 0.1 //This is the speed
+		enemyData.x += 0.45 //This is the speed
 
 		//Check for collision with the castle
-		if (enemyData.x >= 0) {
-			// Checks for reaching the castle from the left
+		if (enemyData.x >= 1000) {
 			endGame()
 			return
 		}
@@ -128,7 +129,7 @@ function gameLoop() {
 		//If no collision, update the visual position on the screen
 		if (enemyDiv) {
 			//Make sure the div exists
-			enemyDiv.style.transform = `translateX(${enemyData.x}%)`
+			enemyDiv.style.transform = `translateX(${enemyData.x}px)`
 		}
 	}
 }
@@ -190,13 +191,13 @@ function startNewWave() {
 		spawnRate = 500
 	}
 
-	newWaveScreen.style.display = 'block'
-	newWaveScreen.querySelector('p').textContent = `${currentWave}`
+	newWaveScreen.style.display = "block"
+	newWaveScreen.querySelector("p").textContent = `${currentWave}`
 
 	clearInterval(spawnInterval)
 
 	setTimeout(() => {
-		newWaveScreen.style.display = 'none'
+		newWaveScreen.style.display = "none"
 		spawnInterval = setInterval(spawnEnemy, spawnRate)
 		problemText.textContent = ""
 		submitButtonState()
@@ -207,7 +208,7 @@ function enemyKilled() {
 	const enemyToRemove = gameArea.querySelector(".enemy")
 
 	if (enemyToRemove) {
-		enemyToRemove.classList.add("vanishing")
+		//enemyToRemove.classList.add("vanishing")
 
 		setTimeout(() => {
 			gameArea.removeChild(enemyToRemove)
