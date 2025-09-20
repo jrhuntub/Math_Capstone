@@ -156,10 +156,10 @@ function spawnEnemy() {
 		//Generate New Problem
 		if (totalEnemies % 4 == 0) {
 			enemyArray.push(generateHardProblem())
-			enemyImageElement.src = "largeEnemy.png"
+			enemyImageElement.src = "big_function.png"
 		} else {
 			enemyArray.push(generateSimpleProblem())
-			enemyImageElement.src = "smallEnemy.png"
+			enemyImageElement.src = "little_function.png"
 		}
 
 		//Create a div for the problem text
@@ -208,7 +208,7 @@ function enemyKilled() {
 	const enemyToRemove = gameArea.querySelector(".enemy")
 
 	if (enemyToRemove) {
-		//enemyToRemove.classList.add("vanishing")
+		enemyToRemove.classList.add("vanishing")
 
 		setTimeout(() => {
 			gameArea.removeChild(enemyToRemove)

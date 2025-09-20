@@ -36,9 +36,13 @@ body {
 	padding-left: 0;
 }
 
+.enemy img {
+	max-height: 50px;
+	max-width: 50px;
+}
+
 .problem-text {
 	color: black;
-	background-color: lightgrey;
 }
 
 .vanishing {
