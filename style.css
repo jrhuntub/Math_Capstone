@@ -1,11 +1,13 @@
 /*All Styles*/
 body {
 	display: flex;
-	margin-top: 20px;
+	margin-top: 20%;
 	align-items: center;
 	justify-content: center;
 	background-color: lightblue
 }
+
+
 
 #gameContainer {
 	display: none;
@@ -34,6 +36,7 @@ body {
 	position: absolute;
 	margin-left: 0;
 	padding-left: 0;
+	gap: 10px;
 }
 
 .enemy img {

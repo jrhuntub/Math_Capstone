@@ -2,6 +2,7 @@ const startScreen = document.getElementById("startPage")
 const gameContainer = document.getElementById("gameContainer")
 const startButton = document.getElementById("startButton")
 const gameArea = document.getElementById("gameArea")
+const body = document.getelement("body")
 
 const problemText = document.getElementById("problemTxt")
 const answerOutput = document.getElementById("answerOutput")
@@ -32,6 +33,10 @@ startButton.addEventListener("click", () => {
 
 	//Display Round 1
 	newWaveScreen.style.display = "block"
+
+	//Change body styles FIXXXXXXX
+	body.style.margin = "20px"
+
 	newWaveScreen.querySelector("p").textContent = `${currentWave}`
 	setTimeout(() => {
 		newWaveScreen.style.display = "none"
@@ -61,6 +66,9 @@ submitButton.addEventListener("click", () => {
 			userAnswer = numerator / denominator
 		} else {
 			answerOutput.textContent = "Invalid fraction. Please try again."
+			setTimeout(() => {
+			answerOutput.textContent = ""
+			}, 2000)
 			return
 		}
 	} else {
@@ -71,6 +79,9 @@ submitButton.addEventListener("click", () => {
 	//Check if the final converted answer is valid
 	if (isNaN(userAnswer)) {
 		answerOutput.textContent = "Please enter a valid number or fraction!"
+		setTimeout(() => {
+			answerOutput.textContent = ""
+		}, 2000)
 		return
 	}
 
@@ -78,6 +89,7 @@ submitButton.addEventListener("click", () => {
 	const tolerance = 0.001 //For float comparison
 	if (Math.abs(userAnswer - enemyArray[0].answer) < tolerance) {
 		answerOutput.textContent = "Correct! You solved the problem"
+		answerInput.value = ""
 
 		enemyKilled()
 		enemyArray.shift()
@@ -102,6 +114,17 @@ submitButton.addEventListener("click", () => {
 	} else {
 		answerOutput.textContent = "Incorrect! Hurry!"
 	}
+
+	setTimeout(() => {
+			answerOutput.textContent = ""
+		}, 2000)
+})
+
+answerInput.addEventListener("keydown", (event) => {
+	//Lets the user press Enter to submit answer
+	if (event.key === "Enter") {
+		submitButton.click()
+	}
 })
 
 restartButton.addEventListener("click", () => {
@@ -121,7 +144,7 @@ function gameLoop() {
 		enemyData.x += 0.45 //This is the speed
 
 		//Check for collision with the castle
-		if (enemyData.x >= 1000) {
+		if (enemyData.x >= 1400) {
 			endGame()
 			return
 		}
