@@ -2,7 +2,7 @@ const startScreen = document.getElementById("startPage")
 const gameContainer = document.getElementById("gameContainer")
 const startButton = document.getElementById("startButton")
 const gameArea = document.getElementById("gameArea")
-const body = document.getelement("body")
+const body = document.getElementById("body")
 
 const problemText = document.getElementById("problemTxt")
 const answerOutput = document.getElementById("answerOutput")
@@ -33,9 +33,6 @@ startButton.addEventListener("click", () => {
 
 	//Display Round 1
 	newWaveScreen.style.display = "block"
-
-	//Change body styles FIXXXXXXX
-	body.style.margin = "20px"
 
 	newWaveScreen.querySelector("p").textContent = `${currentWave}`
 	setTimeout(() => {
