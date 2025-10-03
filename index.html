@@ -9,36 +9,47 @@
 
 	<body>
 		<div id="startPage">
-			<h1>The Equation Invasion</h1>
+			<h1 id="title-name">The Equation Invasion</h1>
 			<p>Defend your castle from Math!</p>
 			<button id="startButton">Start!</button>
+			<div class="image-container">
+				<img src="little_function.png" alt="little enemy" />
+				<img src="big_function.png" alt="big enemy" />
+			</div>
 		</div>
 
 		<div id="gameContainer">
-			<h1>The Equation Invasion</h1>
+			<h1 id="title-name">The Equation Invasion</h1>
+			
+			<input type="text" id="answerInput" placeholder="ANSWER HERE" />
+			<button id="submitButton">Solve!</button>
+			<div id="answerOutput"></div>
 
 			<div id="newWaveScreen">
 				<h1>Wave</h1>
 				<p id="waveNumber"></p>
 			</div>
 
-			<div id="answerOutput"></div>
+			<div class="game-scene"> 
+				<div id="gameArea"></div>
+				<div class="castle-hero">
+					<div id="castle">
+						<img
+							src="cartoon_castle.png"
+							alt="Castle the Hero stands upon"
+						/>
+					</div>
 
-			<input type="text" id="answerInput" placeholder="Answer:" />
-			<button id="submitButton">Solve!</button>
-
-			<div id="gameArea"></div>
-			<div id="castle">
-				<img src="castle.png" alt="Castle the Hero stands upon" />
+					<div id="hero">
+						<img src="hero.png" alt="Hero who defends the Castle" />
+					</div>
+				</div>
 			</div>
-
-			<div id="hero">
-				<img src="hero1.png" alt="Hero who defends the Castle" />
-			</div>
+			<img id="grass" src="grass.png" alt="grass">
 		</div>
 
 		<div id="gameOverScreen">
-			<h1>Game Over!</h1>
+			<h1 id="title-name">Game Over!</h1>
 			<p>The equations reached infinity!</p>
 			<button id="restartButton">Restart</button>
 		</div>

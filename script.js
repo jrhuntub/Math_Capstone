@@ -64,7 +64,7 @@ submitButton.addEventListener("click", () => {
 		} else {
 			answerOutput.textContent = "Invalid fraction. Please try again."
 			setTimeout(() => {
-			answerOutput.textContent = ""
+				answerOutput.textContent = ""
 			}, 2000)
 			return
 		}
@@ -87,7 +87,7 @@ submitButton.addEventListener("click", () => {
 	if (Math.abs(userAnswer - enemyArray[0].answer) < tolerance) {
 		answerOutput.textContent = "Correct! You solved the problem"
 		answerInput.value = ""
-
+		
 		enemyKilled()
 		enemyArray.shift()
 
@@ -113,8 +113,8 @@ submitButton.addEventListener("click", () => {
 	}
 
 	setTimeout(() => {
-			answerOutput.textContent = ""
-		}, 2000)
+		answerOutput.textContent = ""
+	}, 2000)
 })
 
 answerInput.addEventListener("keydown", (event) => {
@@ -131,6 +131,10 @@ restartButton.addEventListener("click", () => {
 function gameLoop() {
 	//Get all the enemy divs on the screen
 	const allEnemyDivs = document.querySelectorAll(".enemy")
+	const castleCoord = document
+		.getElementById("castle")
+		.getBoundingClientRect()
+	const collisionPoint = castleCoord.left
 
 	//Loop through your enemy DATA array
 	for (let i = 0; i < enemyArray.length; i++) {
@@ -138,10 +142,10 @@ function gameLoop() {
 		const enemyDiv = allEnemyDivs[i]
 
 		//Update the enemy's position in the data
-		enemyData.x += 0.45 //This is the speed
+		enemyData.x += .5 //This is the speed
 
 		//Check for collision with the castle
-		if (enemyData.x >= 1400) {
+		if (enemyDiv && enemyDiv.getBoundingClientRect().right >= collisionPoint) {
 			endGame()
 			return
 		}
@@ -245,7 +249,7 @@ function endGame() {
 
 	//Hide the game and show the game over screen
 	gameContainer.style.display = "none"
-	gameOverScreen.style.display = "block"
+	gameOverScreen.style.display = "flex"
 }
 
 function generateSimpleProblem() {
