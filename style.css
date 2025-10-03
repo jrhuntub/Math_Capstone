@@ -36,6 +36,9 @@ body {
 #startPage img {
 	max-width: 25%;
 	height: auto;
+	box-shadow: 5px 5px black;
+	padding-right: 10px;
+	padding-bottom: 10px;
 }
 
 .image-container {
@@ -128,12 +131,12 @@ body {
 
 #hero {
 	position: absolute;
-	bottom: 50%;
-	right: 15%;
+	bottom: 35%;
+	right: 25%;
 }
 
 #hero img {
-	width: 15vw;
+	width: 10vw;
 	height: auto;
 	image-orientation: flip;
 }
