@@ -38,14 +38,14 @@ body {
 	height: auto;
 	box-shadow: 5px 5px black;
 	padding-right: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 8px;
 }
 
 .image-container {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
-	padding-top: 40px;
+	padding-top: 20px;
 	margin: auto;
 }
 
@@ -146,6 +146,11 @@ body {
 	height: auto;
 }
 
+.answer-holder {
+	display: flex;
+	flex-direction: column;
+}
+
 #answerInput {
 	font-size: 1vw;
 	border-width: 2px;
@@ -175,6 +180,10 @@ body {
 	padding-bottom: 5px;
 	font-family: cursive;
 	font-size: medium;
+	position: absolute;
+	transform: translate(-50%, -50%); /* Centers the element precisely */
+	left: 50%;
+	top: 28%;
 }
 
 .enemy {

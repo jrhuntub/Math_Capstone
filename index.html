@@ -20,32 +20,40 @@
 
 		<div id="gameContainer">
 			<h1 id="title-name">The Equation Invasion</h1>
-			
-			<input type="text" id="answerInput" placeholder="Answer Here!" />
-			<button id="submitButton">Solve!</button>
-			<div id="answerOutput"></div>
+
+			<div class="answer-holder">
+				<div id="answerBox">
+					<input
+						type="text"
+						id="answerInput"
+						placeholder="Answer Here!"
+					/>
+					<button id="submitButton">Solve!</button>
+				</div>
+				<div id="answerOutput"></div>
+			</div>
 
 			<div id="newWaveScreen">
 				<h1>Wave</h1>
 				<p id="waveNumber"></p>
 			</div>
 
-			<div class="game-scene"> 
+			<div class="game-scene">
 				<div id="gameArea"></div>
 				<div class="castle-hero">
 					<div id="castle">
 						<img
 							src="cartoon_castle.png"
-							alt="Castle the Hero stands upon"
+							alt="Castle the Hero stands upon" id="castle-image"
 						/>
 					</div>
 
 					<div id="hero">
-						<img src="hero.png" alt="Hero who defends the Castle" />
+						<img src="hero.png" alt="Hero who defends the Castle" id="hero-image"/>
 					</div>
 				</div>
 			</div>
-			<img id="grass" src="grass.png" alt="grass">
+			<img id="grass" src="grass.png" alt="grass" />
 		</div>
 
 		<div id="gameOverScreen">

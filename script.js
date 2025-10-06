@@ -8,6 +8,8 @@ const problemText = document.getElementById("problemTxt")
 const answerOutput = document.getElementById("answerOutput")
 const answerInput = document.getElementById("answerInput")
 const submitButton = document.getElementById("submitButton")
+const castle = document.getElementById("castle-image")
+const hero = document.getElementById("hero-image")
 
 const newWaveScreen = document.getElementById("newWaveScreen")
 const gameOverScreen = document.getElementById("gameOverScreen")
@@ -87,7 +89,7 @@ submitButton.addEventListener("click", () => {
 	if (Math.abs(userAnswer - enemyArray[0].answer) < tolerance) {
 		answerOutput.textContent = "Correct! You solved the problem"
 		answerInput.value = ""
-		
+
 		enemyKilled()
 		enemyArray.shift()
 
@@ -142,11 +144,19 @@ function gameLoop() {
 		const enemyDiv = allEnemyDivs[i]
 
 		//Update the enemy's position in the data
-		enemyData.x += .5 //This is the speed
+		enemyData.x += 5 //This is the speed
 
 		//Check for collision with the castle
-		if (enemyDiv && enemyDiv.getBoundingClientRect().right >= collisionPoint) {
-			endGame()
+		if (
+			enemyDiv &&
+			enemyDiv.getBoundingClientRect().right >= collisionPoint
+		) {
+			setTimeout(() => {
+				endGame()
+			}, 1200)
+			hero.style.display = "none"
+			castle.src = "number-explosion.png"
+			gameArea.style.display = "none"
 			return
 		}
 
