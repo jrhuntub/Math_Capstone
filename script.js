@@ -144,7 +144,7 @@ function gameLoop() {
 		const enemyDiv = allEnemyDivs[i]
 
 		//Update the enemy's position in the data
-		enemyData.x += 5 //This is the speed
+		enemyData.x += .8 //This is the speed
 
 		//Check for collision with the castle
 		if (
