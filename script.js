@@ -36,6 +36,9 @@ startButton.addEventListener("click", () => {
 	//Display Round 1
 	newWaveScreen.style.display = "block"
 
+	//Auto put cursor in answer box
+	answerInput.focus()
+
 	newWaveScreen.querySelector("p").textContent = `${currentWave}`
 	setTimeout(() => {
 		newWaveScreen.style.display = "none"
@@ -126,6 +129,13 @@ answerInput.addEventListener("keydown", (event) => {
 	}
 })
 
+start.addEventListener("keydown", (event) => {
+	//Lets the user press Enter to submit answer
+	if (event.key === "Enter") {
+		startButton.click()
+	}
+})
+
 restartButton.addEventListener("click", () => {
 	window.location.reload()
 })
@@ -144,7 +154,7 @@ function gameLoop() {
 		const enemyDiv = allEnemyDivs[i]
 
 		//Update the enemy's position in the data
-		enemyData.x += .8 //This is the speed
+		enemyData.x += 0.8 //This is the speed
 
 		//Check for collision with the castle
 		if (
@@ -155,7 +165,7 @@ function gameLoop() {
 				endGame()
 			}, 1200)
 			hero.style.display = "none"
-			castle.src = "number-explosion.png"
+			castle.src = "number-Explosion.png"
 			gameArea.style.display = "none"
 			return
 		}
