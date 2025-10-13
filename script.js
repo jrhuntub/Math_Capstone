@@ -15,6 +15,10 @@ const newWaveScreen = document.getElementById("newWaveScreen")
 const gameOverScreen = document.getElementById("gameOverScreen")
 const restartButton = document.getElementById("restartButton")
 
+const pauseScreen = document.getElementById("pauseScreen")
+const pauseButton = document.getElementById("pauseButton")
+const resumeButton = document.getElementById("resumeButton")
+
 let enemiesDefeated = 0
 let enemyArray = []
 let totalEnemies = enemyArray.length + 1
@@ -25,6 +29,8 @@ let enemiesSpawnedThisWave = 0
 let enemiesPerWave = 8
 let spawnRate = 4200
 let movementInterval = 0
+
+let isPaused = false
 
 startButton.addEventListener("click", () => {
 	//Hide Start Screen
@@ -129,12 +135,18 @@ answerInput.addEventListener("keydown", (event) => {
 	}
 })
 
-start.addEventListener("keydown", (event) => {
-	//Lets the user press Enter to submit answer
-	if (event.key === "Enter") {
-		startButton.click()
+//For pausing game
+document.addEventListener("visibilitychange", () => {
+	// Check the computed display style for each element
+    const gameOverScreenOn = window.getComputedStyle(gameOverScreen).display === "none";
+    const startScreenOn = window.getComputedStyle(startScreen).display === "none";
+	
+	if (document.hidden && gameOverScreenOn && startScreenOn) {
+		pauseGame()
 	}
 })
+pauseButton.addEventListener("click", pauseGame)
+resumeButton.addEventListener("click", resumeGame)
 
 restartButton.addEventListener("click", () => {
 	window.location.reload()
@@ -352,5 +364,31 @@ function generateHardProblem() {
 		question: question,
 		answer: answer,
 		x: -100,
+	}
+}
+
+// Pauses game
+function pauseGame() {
+	if (!isPaused) {
+		isPaused = true
+		clearInterval(spawnInterval)
+		clearInterval(movementInterval)
+
+		pauseScreen.style.display = "flex"
+	}
+}
+
+// Resumes the game
+function resumeGame() {
+	if (isPaused) {
+		isPaused = false
+		spawnInterval = setInterval(spawnEnemy, spawnRate)
+		movementInterval = setInterval(gameLoop, 16)
+
+		// Hide the pause screen
+		pauseScreen.style.display = "none"
+
+		//Cursor
+		answerInput.focus()
 	}
 }

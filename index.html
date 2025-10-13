@@ -21,6 +21,8 @@
 		<div id="gameContainer">
 			<h1 id="title-name">The Equation Invasion</h1>
 
+			<button id="pauseButton">Pause</button>
+
 			<div class="answer-holder">
 				<div id="answerBox">
 					<input
@@ -44,16 +46,29 @@
 					<div id="castle">
 						<img
 							src="cartoon_castle.png"
-							alt="Castle the Hero stands upon" id="castle-image"
+							alt="Castle the Hero stands upon"
+							id="castle-image"
 						/>
 					</div>
 
 					<div id="hero">
-						<img src="hero.png" alt="Hero who defends the Castle" id="hero-image"/>
+						<img
+							src="hero.png"
+							alt="Hero who defends the Castle"
+							id="hero-image"
+						/>
 					</div>
 				</div>
 			</div>
 			<img id="grass" src="grass.png" alt="grass" />
+		</div>
+
+		<div id="pauseScreen">
+			<div id="pauseElements">
+				<h1>Paused...</h1>
+				<p>Don't be scared, Math can't hurt you physically!</p>
+				<button id="resumeButton">Resume!</button>
+			</div>
 		</div>
 
 		<div id="gameOverScreen">
