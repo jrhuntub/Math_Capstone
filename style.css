@@ -181,7 +181,7 @@ body {
 	font-family: cursive;
 	font-size: larger;
 	position: absolute;
-	transform: translate(-50%, -50%); /* Centers the element precisely */
+	transform: translate(-50%, -50%);
 	left: 50%;
 	top: 29.5%;
 }
@@ -214,8 +214,25 @@ body {
 }
 
 .enemy img {
-	max-height: 50px;
-	max-width: 50px;
+	max-height: 70px;
+	max-width: 70px;
+}
+
+#big_function {
+	max-height: 90px;
+	max-width: 90px;
+}
+
+.arrow {
+    position: absolute;
+    width: 90px;
+    height: 80px;
+	background: url(arrow.png); 
+	z-index: 5;
+    transition: transform .2s linear; /*Flying*/
+	background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
 }
 
 .problem-text {
@@ -229,11 +246,9 @@ body {
 @keyframes vanishAnimation {
 	from {
 		opacity: 1;
-		transform: scale(1);
 	}
 	to {
 		opacity: 0;
-		transform: scale(0.2);
 	}
 }
 

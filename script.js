@@ -22,6 +22,7 @@ const resumeButton = document.getElementById("resumeButton")
 let enemiesDefeated = 0
 let enemyArray = []
 let totalEnemies = enemyArray.length + 1
+let enemyId = 0
 
 let spawnInterval = 0
 let currentWave = 1
@@ -99,26 +100,37 @@ submitButton.addEventListener("click", () => {
 		answerOutput.textContent = "Correct! You solved the problem"
 		answerInput.value = ""
 
-		enemyKilled()
-		enemyArray.shift()
+		const killedEnemyId = enemyArray[0].id
 
-		if (
-			enemiesSpawnedThisWave >= enemiesPerWave &&
-			enemyArray.length === 0
-		) {
-			submitButton.disabled = true
-			startNewWave()
-		} else {
-			if (enemyArray.length > 0) {
-				problemText.textContent = enemyArray[0].question
-			} else {
-				problemText.textContent = "Waiting for more enemies..."
+		const arrowElement = shootArrow(killedEnemyId)
+
+		setTimeout(() => {
+			if (arrowElement) {
+				arrowElement.remove()
 			}
-		}
+		
 
-		answerInput.value = ""
-		enemiesDefeated++
-		submitButtonState()
+			enemyKilled(killedEnemyId)
+			enemyArray.shift()
+
+			if (
+				enemiesSpawnedThisWave >= enemiesPerWave &&
+				enemyArray.length === 0
+			) {
+				submitButton.disabled = true
+				startNewWave()
+			} else {
+				if (enemyArray.length > 0) {
+					problemText.textContent = enemyArray[0].question
+				} else {
+					problemText.textContent = "Waiting for more enemies..."
+				}
+			}
+
+			answerInput.value = ""
+			enemiesDefeated++
+			submitButtonState()
+		}, 220)
 	} else {
 		answerOutput.textContent = "Incorrect! Hurry!"
 	}
@@ -138,9 +150,11 @@ answerInput.addEventListener("keydown", (event) => {
 //For pausing game
 document.addEventListener("visibilitychange", () => {
 	// Check the computed display style for each element
-    const gameOverScreenOn = window.getComputedStyle(gameOverScreen).display === "none";
-    const startScreenOn = window.getComputedStyle(startScreen).display === "none";
-	
+	const gameOverScreenOn =
+		window.getComputedStyle(gameOverScreen).display === "none"
+	const startScreenOn =
+		window.getComputedStyle(startScreen).display === "none"
+
 	if (document.hidden && gameOverScreenOn && startScreenOn) {
 		pauseGame()
 	}
@@ -153,22 +167,26 @@ restartButton.addEventListener("click", () => {
 })
 
 function gameLoop() {
-	//Get all the enemy divs on the screen
-	const allEnemyDivs = document.querySelectorAll(".enemy")
 	const castleCoord = document
 		.getElementById("castle")
 		.getBoundingClientRect()
 	const collisionPoint = castleCoord.left
 
-	//Loop through your enemy DATA array
+	// Loop through your enemy DATA array
 	for (let i = 0; i < enemyArray.length; i++) {
 		const enemyData = enemyArray[i]
-		const enemyDiv = allEnemyDivs[i]
 
-		//Update the enemy's position in the data
-		enemyData.x += 0.8 //This is the speed
+		// Find the specific enemy div by matching the unique data-id attribute
+		// to the ID in the enemyData object. This prevents the glitch caused by
+		// the array shifting while the old DOM element is still vanishing.
+		const enemyDiv = gameArea.querySelector(
+			`.enemy[data-id="${enemyData.id}"]`
+		)
 
-		//Check for collision with the castle
+		// Update the enemy's position in the data
+		enemyData.x += 0.8 // This is the speed
+
+		// Check for collision with the castle
 		if (
 			enemyDiv &&
 			enemyDiv.getBoundingClientRect().right >= collisionPoint
@@ -182,9 +200,9 @@ function gameLoop() {
 			return
 		}
 
-		//If no collision, update the visual position on the screen
+		// If no collision, update the visual position on the screen
 		if (enemyDiv) {
-			//Make sure the div exists
+			// Make sure the div exists
 			enemyDiv.style.transform = `translateX(${enemyData.x}px)`
 		}
 	}
@@ -202,26 +220,36 @@ function submitButtonState() {
 function spawnEnemy() {
 	if (enemiesSpawnedThisWave < enemiesPerWave) {
 		//Create Enemy container div
+		const newEnemyId = enemyId++
 		const enemyElement = document.createElement("div")
 		enemyElement.className = "enemy"
+		enemyElement.setAttribute("data-id", newEnemyId)
 
 		//Create an img element for the enemy's image
 		const enemyImageElement = document.createElement("img")
 		enemyImageElement.className = "enemy-image"
 
+		//Create enemyIdCounter
+		let newEnemyData
+
 		//Generate New Problem
 		if (totalEnemies % 4 == 0) {
-			enemyArray.push(generateHardProblem())
+			newEnemyData = generateHardProblem()
 			enemyImageElement.src = "big_function.png"
+			enemyImageElement.id = "big_function"
 		} else {
-			enemyArray.push(generateSimpleProblem())
+			newEnemyData = generateSimpleProblem()
 			enemyImageElement.src = "little_function.png"
 		}
+		//Enemy Data ID
+		newEnemyData.id = newEnemyId
+
+		//Push enemy data to array
+		enemyArray.push(newEnemyData)
 
 		//Create a div for the problem text
 		const problemTextElement = document.createElement("div")
-		problemTextElement.textContent =
-			enemyArray[enemyArray.length - 1].question
+		problemTextElement.textContent = newEnemyData.question
 		problemTextElement.className = "problem-text"
 
 		//Append the text and image to the enemy container
@@ -260,12 +288,10 @@ function startNewWave() {
 	}, 3000)
 }
 
-function enemyKilled() {
-	const enemyToRemove = gameArea.querySelector(".enemy")
+function enemyKilled(id) {
+	const enemyToRemove = gameArea.querySelector(`.enemy[data-id="${id}"]`)
 
 	if (enemyToRemove) {
-		enemyToRemove.classList.add("vanishing")
-
 		setTimeout(() => {
 			gameArea.removeChild(enemyToRemove)
 		}, 500)
@@ -391,4 +417,39 @@ function resumeGame() {
 		//Cursor
 		answerInput.focus()
 	}
+}
+
+//Arrow being shot
+function shootArrow(id) {
+	const heroCord = hero.getBoundingClientRect()
+	const gameAreaCord = gameArea.getBoundingClientRect()
+	const targetEnemy = gameArea.querySelector(`.enemy[data-id="${id}"]`) 
+	const enemyCord = targetEnemy.getBoundingClientRect()
+
+	//Make sure enemy still exists
+	if (!targetEnemy) return
+
+	//Create arrow
+	const arrow = document.createElement('div')
+	arrow.className = 'arrow'
+	arrow.id = `arrow-${id}`
+	gameArea.appendChild(arrow)
+
+	//Calculate start/end positions
+	const startX = heroCord.right - gameAreaCord.left - 20 //Start near hero
+	const startY = heroCord.top - gameAreaCord.top + 20 //Align with hero
+
+	const endX = enemyCord.left - gameAreaCord.left // End at enemy's left edge
+    const endY = enemyCord.top - gameAreaCord.top + (enemyCord.height / 6) // End at enemy's vertical
+
+	//Initialize arrow position
+    arrow.style.transform = `translate(${startX}px, ${startY}px)`
+
+	setTimeout(() => {
+        // Trigger the CSS transition to move the arrow to the enemy
+        arrow.style.transform = `translate(${endX}px, ${endY}px)`
+    }, 10)
+	
+	//return for removal
+	return arrow
 }
