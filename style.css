@@ -146,6 +146,14 @@ body {
 	height: auto;
 }
 
+#dragon img {
+	position: absolute;
+	left: 5%;
+	top: 31%;
+	width: 200px;
+	height: auto;
+}
+
 .answer-holder {
 	display: flex;
 	flex-direction: column;
@@ -183,7 +191,7 @@ body {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	left: 50%;
-	top: 29.5%;
+	top: 31%;
 }
 
 #pauseButton {

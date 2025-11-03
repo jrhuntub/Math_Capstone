@@ -109,7 +109,7 @@ submitButton.addEventListener("click", () => {
 				arrowElement.remove()
 			}
 		
-
+			enemyArray[0].x = -100
 			enemyKilled(killedEnemyId)
 			enemyArray.shift()
 
@@ -251,6 +251,8 @@ function spawnEnemy() {
 		const problemTextElement = document.createElement("div")
 		problemTextElement.textContent = newEnemyData.question
 		problemTextElement.className = "problem-text"
+
+		enemyElement.style.transform = `translateX(${newEnemyData.x}px)`
 
 		//Append the text and image to the enemy container
 		enemyElement.appendChild(problemTextElement)
