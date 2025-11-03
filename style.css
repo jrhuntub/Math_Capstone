@@ -152,6 +152,7 @@ body {
 	top: 31%;
 	width: 200px;
 	height: auto;
+	z-index: 10;
 }
 
 .answer-holder {

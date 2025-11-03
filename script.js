@@ -10,6 +10,7 @@ const answerInput = document.getElementById("answerInput")
 const submitButton = document.getElementById("submitButton")
 const castle = document.getElementById("castle-image")
 const hero = document.getElementById("hero-image")
+const dragon = document.getElementById("dragon")
 
 const newWaveScreen = document.getElementById("newWaveScreen")
 const gameOverScreen = document.getElementById("gameOverScreen")
@@ -133,6 +134,7 @@ submitButton.addEventListener("click", () => {
 		}, 220)
 	} else {
 		answerOutput.textContent = "Incorrect! Hurry!"
+		shootDragon(enemyArray[0].id)
 	}
 
 	setTimeout(() => {
@@ -443,6 +445,36 @@ function shootArrow(id) {
 
 	const endX = enemyCord.left - gameAreaCord.left // End at enemy's left edge
     const endY = enemyCord.top - gameAreaCord.top + (enemyCord.height / 6) // End at enemy's vertical
+
+	//Initialize arrow position
+    arrow.style.transform = `translate(${startX}px, ${startY}px)`
+
+	setTimeout(() => {
+        // Trigger the CSS transition to move the arrow to the enemy
+        arrow.style.transform = `translate(${endX}px, ${endY}px)`
+    }, 10)
+	
+	//return for removal
+	return arrow
+}
+
+function shootDragon(id) {
+	const dragonCord = dragon.getBoundingClientRect()
+	const heroCord = hero.getBoundingClientRect()
+	const gameAreaCord = gameArea.getBoundingClientRect()
+
+	//Create arrow
+	const arrow = document.createElement('div')
+	arrow.className = 'arrow'
+	arrow.id = `arrow-${id}`
+	gameArea.appendChild(arrow)
+
+	//Calculate start/end positions
+	const startX = heroCord.right - gameAreaCord.left - 20 //Start near hero
+	const startY = heroCord.top - gameAreaCord.top + 20 //Align with hero
+
+	const endX = dragonCord.left - gameAreaCord.left - 80  // End at enemy's left edge
+    const endY = dragonCord.top - gameAreaCord.top + 235 // End at enemy's vertical
 
 	//Initialize arrow position
     arrow.style.transform = `translate(${startX}px, ${startY}px)`
