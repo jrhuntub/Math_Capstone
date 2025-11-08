@@ -106,12 +106,14 @@ submitButton.addEventListener("click", () => {
 		const killedEnemyId = enemyArray[0].id
 
 		const arrowElement = shootArrow(killedEnemyId)
+		
 
 		setTimeout(() => {
 			if (arrowElement) {
 				arrowElement.remove()
 			}
-
+			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
+			enemy1.classList.remove("current-enemy")
 			enemyArray[0].x = -100
 			enemyKilled(killedEnemyId)
 			enemyArray.shift()
