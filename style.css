@@ -228,6 +228,16 @@ body {
 	max-width: 70px;
 }
 
+.current-enemy .problem-text {
+  box-shadow: 0 0 15px 5px white;
+  border-color: white;
+  background-color: white;
+}
+
+.current-enemy .enemy-image {
+  filter: drop-shadow(0 0 10px white); 
+}
+
 #big_function {
 	max-height: 90px;
 	max-width: 90px;

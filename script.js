@@ -54,6 +54,8 @@ startButton.addEventListener("click", () => {
 
 	//Spawn New Enemy
 	spawnEnemy()
+	enemy1 = gameArea.querySelector(`.enemy[data-id="${0}"]`)
+	enemy1.classList.add("current-enemy")
 
 	//Start the enemy spawner
 	spawnInterval = setInterval(spawnEnemy, spawnRate)
@@ -109,10 +111,13 @@ submitButton.addEventListener("click", () => {
 			if (arrowElement) {
 				arrowElement.remove()
 			}
-		
+
 			enemyArray[0].x = -100
 			enemyKilled(killedEnemyId)
 			enemyArray.shift()
+
+			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
+			enemy1.classList.add("current-enemy")
 
 			if (
 				enemiesSpawnedThisWave >= enemiesPerWave &&
@@ -427,15 +432,15 @@ function resumeGame() {
 function shootArrow(id) {
 	const heroCord = hero.getBoundingClientRect()
 	const gameAreaCord = gameArea.getBoundingClientRect()
-	const targetEnemy = gameArea.querySelector(`.enemy[data-id="${id}"]`) 
+	const targetEnemy = gameArea.querySelector(`.enemy[data-id="${id}"]`)
 	const enemyCord = targetEnemy.getBoundingClientRect()
 
 	//Make sure enemy still exists
 	if (!targetEnemy) return
 
 	//Create arrow
-	const arrow = document.createElement('div')
-	arrow.className = 'arrow'
+	const arrow = document.createElement("div")
+	arrow.className = "arrow"
 	arrow.id = `arrow-${id}`
 	gameArea.appendChild(arrow)
 
@@ -444,16 +449,16 @@ function shootArrow(id) {
 	const startY = heroCord.top - gameAreaCord.top + 20 //Align with hero
 
 	const endX = enemyCord.left - gameAreaCord.left // End at enemy's left edge
-    const endY = enemyCord.top - gameAreaCord.top + (enemyCord.height / 6) // End at enemy's vertical
+	const endY = enemyCord.top - gameAreaCord.top + enemyCord.height / 6 // End at enemy's vertical
 
 	//Initialize arrow position
-    arrow.style.transform = `translate(${startX}px, ${startY}px)`
+	arrow.style.transform = `translate(${startX}px, ${startY}px)`
 
 	setTimeout(() => {
-        // Trigger the CSS transition to move the arrow to the enemy
-        arrow.style.transform = `translate(${endX}px, ${endY}px)`
-    }, 10)
-	
+		// Trigger the CSS transition to move the arrow to the enemy
+		arrow.style.transform = `translate(${endX}px, ${endY}px)`
+	}, 10)
+
 	//return for removal
 	return arrow
 }
@@ -464,8 +469,8 @@ function shootDragon(id) {
 	const gameAreaCord = gameArea.getBoundingClientRect()
 
 	//Create arrow
-	const arrow = document.createElement('div')
-	arrow.className = 'arrow'
+	const arrow = document.createElement("div")
+	arrow.className = "arrow"
 	arrow.id = `arrow-${id}`
 	gameArea.appendChild(arrow)
 
@@ -473,17 +478,17 @@ function shootDragon(id) {
 	const startX = heroCord.right - gameAreaCord.left - 20 //Start near hero
 	const startY = heroCord.top - gameAreaCord.top + 20 //Align with hero
 
-	const endX = dragonCord.left - gameAreaCord.left - 80  // End at enemy's left edge
-    const endY = dragonCord.top - gameAreaCord.top + 235 // End at enemy's vertical
+	const endX = dragonCord.left - gameAreaCord.left - 80 // End at enemy's left edge
+	const endY = dragonCord.top - gameAreaCord.top + 235 // End at enemy's vertical
 
 	//Initialize arrow position
-    arrow.style.transform = `translate(${startX}px, ${startY}px)`
+	arrow.style.transform = `translate(${startX}px, ${startY}px)`
 
 	setTimeout(() => {
-        // Trigger the CSS transition to move the arrow to the enemy
-        arrow.style.transform = `translate(${endX}px, ${endY}px)`
-    }, 10)
-	
+		// Trigger the CSS transition to move the arrow to the enemy
+		arrow.style.transform = `translate(${endX}px, ${endY}px)`
+	}, 10)
+
 	//return for removal
 	return arrow
 }
