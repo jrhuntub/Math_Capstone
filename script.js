@@ -106,20 +106,25 @@ submitButton.addEventListener("click", () => {
 		const killedEnemyId = enemyArray[0].id
 
 		const arrowElement = shootArrow(killedEnemyId)
-		
 
 		setTimeout(() => {
 			if (arrowElement) {
 				arrowElement.remove()
 			}
-			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
+			enemy1 = gameArea.querySelector(
+				`.enemy[data-id="${enemyArray[0].id}"]`
+			)
 			enemy1.classList.remove("current-enemy")
 			enemyArray[0].x = -100
 			enemyKilled(killedEnemyId)
 			enemyArray.shift()
 
-			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
-			enemy1.classList.add("current-enemy")
+			if (enemyArray.length > 0) {
+				enemy1 = gameArea.querySelector(
+					`.enemy[data-id="${enemyArray[0].id}"]`
+				)
+				enemy1.classList.add("current-enemy")
+			}
 
 			if (
 				enemiesSpawnedThisWave >= enemiesPerWave &&
@@ -193,7 +198,7 @@ function gameLoop() {
 		)
 
 		// Update the enemy's position in the data
-		enemyData.x += 0.8 // This is the speed
+		enemyData.x += 0.9 // This is the speed
 
 		// Check for collision with the castle
 		if (
@@ -271,6 +276,11 @@ function spawnEnemy() {
 		totalEnemies++
 
 		enemiesSpawnedThisWave++
+
+		if (enemyArray.length === 1) {
+			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
+			enemy1.classList.add("current-enemy")
+		}
 
 		submitButtonState()
 	}
