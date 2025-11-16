@@ -161,10 +161,10 @@ submitButton.addEventListener("click", () => {
 			if (Date.now() % 2 == 0) {
 				missCommentElement.textContent = "Ha! You missed me! ;D"
 			} else if (Date.now() % 3 == 0) {
-				missCommentElement.textContent = "What a shot lol! :D"
+				missCommentElement.textContent = "What a shot! ;)"
 			} else {
 				missCommentElement.textContent =
-					"Should I slow down for you? ;)"
+					"Need me to slow down?? :D"
 			}
 			setTimeout(() => {
 				missCommentElement.textContent = ""
