@@ -68,6 +68,10 @@ submitButton.addEventListener("click", () => {
 	let userAnswer
 	const inputString = answerInput.value.trim()
 
+	const missCommentElement = document.querySelector(
+		".current-enemy .comment-text"
+	)
+
 	if (inputString.includes("/")) {
 		//Split Fraction
 		const parts = inputString.split("/")
@@ -106,6 +110,8 @@ submitButton.addEventListener("click", () => {
 		const killedEnemyId = enemyArray[0].id
 
 		const arrowElement = shootArrow(killedEnemyId)
+
+		missCommentElement.textContent = ""
 
 		setTimeout(() => {
 			if (arrowElement) {
@@ -146,6 +152,28 @@ submitButton.addEventListener("click", () => {
 		}, 220)
 	} else {
 		answerOutput.textContent = "Incorrect! Hurry!"
+
+		const enemyImg = document.querySelector(".enemy img")
+		const enemyType = document.querySelector(".current-enemy #big_function")
+		
+		if (missCommentElement) {
+			enemyImg.style.padding = "0px"
+			if (Date.now() % 2 == 0) {
+				missCommentElement.textContent = "Ha! You missed me! ;D"
+			} else if (Date.now() % 3 == 0) {
+				missCommentElement.textContent = "What a shot lol! :D"
+			} else {
+				missCommentElement.textContent =
+					"Should I slow down for you? ;)"
+			}
+			setTimeout(() => {
+				missCommentElement.textContent = ""
+				if(!enemyType) {
+					enemyImg.style.padding = "20px"
+				}
+			}, 3000)
+		}
+
 		shootDragon(enemyArray[0].id)
 	}
 
@@ -246,11 +274,16 @@ function spawnEnemy() {
 		//Create enemyIdCounter
 		let newEnemyData
 
+		//Create a div for the problem text
+		const problemTextElement = document.createElement("div")
+		problemTextElement.className = "problem-text"
+
 		//Generate New Problem
 		if (totalEnemies % 4 == 0) {
 			newEnemyData = generateHardProblem()
 			enemyImageElement.src = "big_function.png"
 			enemyImageElement.id = "big_function"
+			problemTextElement.style.padding = "0px 5px"
 		} else {
 			newEnemyData = generateSimpleProblem()
 			enemyImageElement.src = "little_function.png"
@@ -261,14 +294,18 @@ function spawnEnemy() {
 		//Push enemy data to array
 		enemyArray.push(newEnemyData)
 
-		//Create a div for the problem text
-		const problemTextElement = document.createElement("div")
+		//Populate question
 		problemTextElement.textContent = newEnemyData.question
-		problemTextElement.className = "problem-text"
+
+		//Create div for comments when miss
+		const missCommentElement = document.createElement("div")
+		missCommentElement.className = "comment-text"
+		missCommentElement.textContent = ""
 
 		enemyElement.style.transform = `translateX(${newEnemyData.x}px)`
 
 		//Append the text and image to the enemy container
+		enemyElement.appendChild(missCommentElement)
 		enemyElement.appendChild(problemTextElement)
 		enemyElement.appendChild(enemyImageElement)
 		gameArea.appendChild(enemyElement)
@@ -278,7 +315,9 @@ function spawnEnemy() {
 		enemiesSpawnedThisWave++
 
 		if (enemyArray.length === 1) {
-			enemy1 = gameArea.querySelector(`.enemy[data-id="${enemyArray[0].id}"]`)
+			enemy1 = gameArea.querySelector(
+				`.enemy[data-id="${enemyArray[0].id}"]`
+			)
 			enemy1.classList.add("current-enemy")
 		}
 

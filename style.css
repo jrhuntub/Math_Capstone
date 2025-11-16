@@ -241,6 +241,11 @@ body {
 #big_function {
 	max-height: 90px;
 	max-width: 90px;
+	padding-top: 0px
+}
+
+#big_function .problem-text {
+	padding: 0 5px;
 }
 
 .arrow {
@@ -260,6 +265,12 @@ body {
 	font-size: x-large;
 	font-weight: bold;
 	border: 2px solid black;
+}
+
+.comment-text {
+	color: red;
+	font-size: large;
+	font-weight: bold;
 }
 
 .vanishing {
@@ -378,5 +389,23 @@ body {
 @media (min-width: 1600px) {
   #answerOutput {
     top: 35%; 
+  }
+  #startPage {
+	margin-top: 5%;
+  }
+}
+
+@media (max-height: 750px) {
+	#answerOutput {
+    top: 35%; 
+  }
+  .enemy img {
+	padding-top: 0px;
+  }
+  #dragon img {
+	top: 20%;
+  }
+  #startPage {
+	margin-top: 5%;
   }
 }
